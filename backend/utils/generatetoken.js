@@ -21,3 +21,7 @@ export const generateToken = (res, userId) => {
 
     console.log('JWT token generated and sent to user');
 };
+
+
+
+
