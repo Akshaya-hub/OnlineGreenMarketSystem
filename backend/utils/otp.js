@@ -21,16 +21,17 @@ export const sendOTPEmail = async (email, otp) => {
         text: `Your OTP code is ${otp}`
     };
 
+    console.log('Sending OTP email with options:', mailOptions);
+
     try {
         await transporter.sendMail(mailOptions);
         console.log('OTP sent successfully');
     } catch (error) {
         console.error('Error sending OTP:', error);
-
-        console.error('Error sending OTP:', error);
         throw new Error('Error sending OTP');
     }
 };
+
 
 
 

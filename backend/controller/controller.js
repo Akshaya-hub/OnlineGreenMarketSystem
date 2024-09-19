@@ -6,27 +6,31 @@ import { sendOTPEmail } from '../utils/otp.js';
 // Signup function (send OTP, don't save the user yet)
 export const signup = async (req, res) => {
     const { name, email, address, contactNo, password } = req.body;
-    
+
     try {
-        // Validate required fields
         if (!name || !email || !address || !contactNo || !password) {
             throw new Error("All fields are required");
         }
 
-        // Check if user already exists
         const userAlreadyExists = await User.findOne({ email });
         if (userAlreadyExists) {
             return res.status(400).json({ success: false, message: "User already exists" });
         }
 
-        // Hash the password
         const hashedPassword = await bcryptjs.hash(password, 10);
-
-        // Generate OTP
         const otp = generateOTP();
-        const otpExpiresAt = Date.now() + 10 * 60 * 1000; // OTP expires in 10 minutes
+        const otpExpiresAt = Date.now() + 10 * 60 * 1000; // 10 minutes
 
-        // Store the user data in the session (or temporarily)
+        // Log session data
+        console.log("Setting session data:", {
+            name,
+            email,
+            address,
+            contactNo,
+            otp,
+            otpExpiresAt
+        });
+
         req.session.tempUserData = {
             name,
             email,
@@ -37,14 +41,11 @@ export const signup = async (req, res) => {
             otpExpiresAt
         };
 
-        // Send OTP to user's email
         await sendOTPEmail(email, otp);
-
         res.status(200).json({
             success: true,
             message: "OTP sent to your email. Please verify the OTP to complete the registration."
         });
-
     } catch (error) {
         console.error("Error in signup:", error);
         res.status(400).json({ success: false, message: error.message });
@@ -55,23 +56,23 @@ export const verifySignup = async (req, res) => {
     const { email, otp } = req.body;
 
     try {
-        // Check if temporary user data exists
+        // Log session data and request data
         const tempUserData = req.session.tempUserData;
+        console.log("Session data:", tempUserData);
+        console.log("Verification request:", { email, otp });
+
         if (!tempUserData || tempUserData.email !== email) {
             return res.status(400).json({ success: false, message: "Invalid email or session expired" });
         }
 
-        // Check if OTP is correct and not expired
-        const { otp: storedOtp, otpExpiresAt } = tempUserData;
-        if (otp !== storedOtp) {
+        if (otp !== tempUserData.otp) {
             return res.status(400).json({ success: false, message: "Invalid OTP" });
         }
 
-        if (Date.now() > otpExpiresAt) {
+        if (Date.now() > tempUserData.otpExpiresAt) {
             return res.status(400).json({ success: false, message: "OTP has expired" });
         }
 
-        // If OTP is valid, save the user to the database
         const newUser = new User({
             name: tempUserData.name,
             email: tempUserData.email,
@@ -81,18 +82,13 @@ export const verifySignup = async (req, res) => {
             isVerified: true
         });
         await newUser.save();
-
-        // Generate and send JWT token
         generateToken(res, newUser._id);
-
-        // Clear session data after success
         req.session.tempUserData = null;
 
         res.status(201).json({
             success: true,
             message: "Email verified successfully. You are now registered."
         });
-
     } catch (error) {
         console.error("Error in verifySignup:", error);
         res.status(400).json({ success: false, message: error.message });
