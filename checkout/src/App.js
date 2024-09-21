@@ -13,11 +13,12 @@ import CheckoutScreen from './screens/CheckoutScreen';  // New import
 import Navbar from './components/Navbar';
 import Backdrop from "./components/Backdrop";
 import SideDrawer from "./components/SideDrawer";
-
+import AdminPgae from "./Pages/AdminPgae";
+const role = 'user';
 function App() {
-  const [sideToggle, setSideToggle] = useState(false);
-
-  return (
+ const [sideToggle, setSideToggle] = useState(false);
+ if(role === 'user'){
+  return(
     <Router>
       <Navbar click={() => setSideToggle(true)} />
       <SideDrawer show={sideToggle} click={() => setSideToggle(false)} />
@@ -33,7 +34,11 @@ function App() {
         </Routes>
       </main>
     </Router>
-  );
+  )
+ }
+  else{
+    return <AdminPgae/>
+  }
 }
 
 export default App;

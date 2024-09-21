@@ -5,6 +5,7 @@ const app = express();
 const cors = require("cors");
 const connectDB = require("./config/DataBase");
 const productRoutes = require("./routes/productRoutes");
+const cartRoutes = require("./routes/cartRoute")
 const mongoose = require("mongoose");
 
 // middleware
@@ -12,6 +13,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(cors());
 app.use("/api/products", productRoutes);
+app.use("/api/cartItems",cartRoutes );
 
 connectDB();
 

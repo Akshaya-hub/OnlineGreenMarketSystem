@@ -1,54 +1,28 @@
-// src/features/slice/productsSlice.js
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import dummyData from "../../dummyData";
 
 const initialState = {
-    items: dummyData,  // Initialize with dummy data
+    items: [],
     productDetail: {},
     loading: false,
+    error: null,  // Add error field for error handling
 };
 
-// Fetch products (simulating an API call with dummy data)
-// Uncomment the following lines to fetch from the database
-/*
+// Fetch products from the database
 export const fetchProducts = createAsyncThunk("products/fetchProducts", async () => {
     const response = await fetch('http://localhost:8000/api/products');
     if (!response.ok) {
-        throw new Error('Network response was not ok');
+        throw new Error('Failed to fetch products');
     }
     return await response.json();
 });
-*/
 
-// Fetch products (simulating an API call with dummy data)
-export const fetchProducts = createAsyncThunk("products/fetchProducts", async () => {
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            resolve(dummyData);
-        }, 500);
-    });
-});
-
-// Fetch product details (simulating an API call with dummy data)
-// Uncomment the following lines to fetch from the database
-/*
+// Fetch product details from the database
 export const fetchProductDetail = createAsyncThunk("products/fetchProductDetail", async (id) => {
     const response = await fetch(`http://localhost:8000/api/products/${id}`);
     if (!response.ok) {
-        throw new Error('Network response was not ok');
+        throw new Error(`Failed to fetch product with id ${id}`);
     }
     return await response.json();
-});
-*/
-
-// Fetch product details (simulating an API call with dummy data)
-export const fetchProductDetail = createAsyncThunk("products/fetchProductDetail", async (id) => {
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            const product = dummyData.find((item) => item._id === id);
-            resolve(product);
-        }, 500);
-    });
 });
 
 const productsSlice = createSlice({
@@ -63,23 +37,27 @@ const productsSlice = createSlice({
         builder
             .addCase(fetchProducts.pending, (state) => {
                 state.loading = true;
+                state.error = null;
             })
             .addCase(fetchProducts.fulfilled, (state, action) => {
                 state.loading = false;
                 state.items = action.payload;
             })
-            .addCase(fetchProducts.rejected, (state) => {
+            .addCase(fetchProducts.rejected, (state, action) => {
                 state.loading = false;
+                state.error = action.error.message;
             })
             .addCase(fetchProductDetail.pending, (state) => {
                 state.loading = true;
+                state.error = null;
             })
             .addCase(fetchProductDetail.fulfilled, (state, action) => {
                 state.loading = false;
                 state.productDetail = action.payload;
             })
-            .addCase(fetchProductDetail.rejected, (state) => {
+            .addCase(fetchProductDetail.rejected, (state, action) => {
                 state.loading = false;
+                state.error = action.error.message;
             });
     },
 });

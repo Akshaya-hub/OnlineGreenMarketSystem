@@ -22,7 +22,7 @@ const ProductScreen = () => {
   }, [dispatch, id]);
 
   const handleAddToCart = (item) => {
-    if (cartQuantity < item.countInStock) {
+    if (cartQuantity < item.quantity) {
       dispatch(addToCart(item));
     } else {
       setError('Cannot add more than available stock');
@@ -49,8 +49,8 @@ const ProductScreen = () => {
       <div className="productscreen-right">
         <div className="right-info">
           <p>Price: <span>${item.price}</span></p>
-          <p>Status: <span>{item.countInStock > 0 ? 'In Stock' : 'Out of Stock'}</span></p>
-          <p>Qty in stock: <span>{item.countInStock}</span></p>
+          <p>Status: <span>{item.quantity > 0 ? 'In Stock' : 'Out of Stock'}</span></p>
+          <p>Qty in stock: <span>{item.quantity}</span></p>
           <p>
             <button
               type="button"
