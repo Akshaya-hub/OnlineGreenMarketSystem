@@ -1,0 +1,233 @@
+
+/* General packaging section styling */
+.packaging {
+    padding: 50px;
+    background-color: #f5f0e7;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  /* Individual product card styling */
+  .productpack {
+    display: flex;
+    align-items: center;
+    background-color: #f8f5ec;
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+  }
+  
+  /* Product image styling */
+  .productpack-image {
+    width: 150px;
+    height: 150px;
+    display: flex;
+    border-radius: 10px;
+    margin-right: 20px;
+  }
+  
+  /* Product details */
+  .productpack-details {
+    flex-grow: 1;
+  }
+  
+  .productpack-details h3 {
+    margin: 0;
+    font-size: 20px;
+    color: #333;
+  }
+  
+  .productpack-details p {
+    margin: 5px 0;
+    font-size: 14px;
+    color: #666;
+  }
+  
+  /* Selection container */
+  .selection {
+    display: flex;
+    flex-direction: column;
+    width: 700px;
+    padding: 20px;
+    margin-right:50px ;
+  }
+  
+  /* Label and dropdown for packaging option */
+  .selection label {
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 5px;
+  }
+  
+  .selection select {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: #fff;
+    color: #333;
+    cursor: pointer;
+    margin-bottom: 10px;
+    margin-right: 10px; /* Space between the dropdown and the buttons */
+    flex: 1; 
+  }
+  
+  /* Button group for custom color and pattern */
+  .button-group {
+    display: flex;
+    gap: 10px;
+    padding-right: 20px;
+    flex-direction: column;
+  }
+  
+  button.custom-color, 
+  button.add-pattern {
+    padding: 10px 20px;
+    font-size: 14px;
+    background-color: #7b8c6f;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+
+  .submit{
+    padding: 10px 20px;
+    font-size: 14px;
+    background-color: #7b8c6f;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  
+  button.add-pattern {
+    background-color: #5a7355;
+  }
+  /* Note input section */
+  .note-section label {
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 5px;
+  }
+  
+  .note-section input {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    width: 95%;
+    background-color: #fff;
+  }
+
+
+  /* Container for the cards */
+.packaging-cards {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    padding: 20px;
+    gap: 20px;
+    background-color: #f5f0e7;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  /* Individual card styling */
+  .card {
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    width: 300px;
+    height:440px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.2s ease-in-out;
+  }
+
+  .cardPack {
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    width: 500px;
+    height:200px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  /* Image styling */
+  .product-image {
+    width: 200px;
+    height: auto;
+    margin-bottom: 15px;
+    object-fit: contain;
+  }
+
+  .material-image{
+    width: 200px;
+    height: auto;
+    margin-bottom: 15px;
+    object-fit: contain;
+  }
+  
+  /* Card title styling */
+  .card h3 {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  /* Card description styling */
+  .card p {
+    font-size: 14px;
+    color: #666;
+    line-height: 1.5;
+  }
+  
+  /* Card hover effect */
+  .card:hover {
+    transform: scale(1.05);
+  }
+  .button-group label{
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 5px;
+  }
+  .button-group select{
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: #fff;
+    color: #333;
+    cursor: pointer;
+    margin-bottom: 10px;
+    margin-right: 10px; /* Space between the dropdown and the buttons */
+    flex: 1; 
+  }
+
+.pattern-image{
+  width: 25px;
+}
+
+.arrow{
+  width:25px;
+  padding-left: 10px;
+}
+.back{
+  flex-direction: row;
+  align-items: center;
+  display: flex;
+  gap:10px;
+}
+  /* @media (max-width: 768px) {
+    .product-image {
+      width: 80px; 
+  }
+} */
+
+
+
+  
