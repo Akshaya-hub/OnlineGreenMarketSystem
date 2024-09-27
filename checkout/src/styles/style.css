@@ -6,7 +6,7 @@
 
 body {
   font-family: Arial, Helvetica, sans-serif;
-  background: #D6BD98;
+  background: #f6efe5;
 }
 
 img {
@@ -18,7 +18,7 @@ img {
 .navbar {
   width: 100%;
   height: 98px;
-  background-color: #171717;
+  background-color: #f6efe5;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -29,7 +29,7 @@ img {
   text-decoration: none;
 }
 .navbar .navbar-logo a h2 {
-  color: #F4F4F4;
+  color: black;
   font-size: 1.5rem;
   cursor: pointer;
 }
@@ -42,7 +42,7 @@ img {
   padding-left: 1.5rem;
 }
 .navbar .navbar-links > li .cart-link {
-  background: #333;
+  background: #7eb686;
   padding: 10px;
   border-radius: 8px;
 }
@@ -83,7 +83,10 @@ img {
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
+  
+  background-color: #7eb686;
 }
+
 .navbar .hamburger-menu:hover > div {
   background-color: #dd219e;
 }
@@ -466,7 +469,7 @@ img {
 
     h2 {
       margin-bottom: 1rem;
-      color: #677D6A; /* Heading color set to green */
+      color: #7eb686; /* Heading color set to green */
     }
 
     table {
@@ -478,7 +481,7 @@ img {
     th, td {
       padding: 12px;
       text-align: left;
-      border-bottom: 2px solid #677D6A; /* Horizontal line color set to green */
+      border-bottom: 2px solid #7eb686; /* Horizontal line color set to green */
     }
 
 
@@ -506,7 +509,7 @@ img {
     }
 
     .remove-btn:hover {
-      color: #677D6A; /* Remove button color on hover */
+      color: #7eb686; /* Remove button color on hover */
       text-decoration: underline;
       
     }
@@ -514,9 +517,11 @@ img {
     .quantity-controls-button{
       
       border: 1px solid ;
-      width: 70px;
+      width: 65px;
       border-radius: 5px;
       justify-content: space-between;
+      border-color: #7eb686;
+      transition: color 0.9s ease;
 
     }
     .quantity-controls {
@@ -525,8 +530,9 @@ img {
       justify-content: space-between;
       width: 25px;
       height: 25px;
-      font-size: 25px;
+      font-size: 20px;
       background-color: transparent;
+      transition: color 0.3s ease;
       
 
       button {
@@ -540,7 +546,7 @@ img {
       }
 
       button:hover {
-        background-color: #677D6A;
+        background-color: #7eb686;
         color: white; 
       }
 
@@ -568,9 +574,9 @@ img {
       button {
         padding: 10px 17px;
         width: 100%;
-        background: #677D6A; 
+        background: #7eb686; 
         color: #F4F4F4;
-        border: 1px solid #677D6A; 
+        border: 1px solid #7eb686; 
         cursor: pointer;
 
         &:hover {
@@ -615,6 +621,7 @@ img {
 
 .search-bar {
   position: relative;
+
 }
 
 .search-bar input {
@@ -637,7 +644,7 @@ img {
 }
 
 .search-results li {
-  padding: 25px;
+  padding: 20px;
   cursor: pointer;
 }
 
@@ -692,7 +699,7 @@ img {
 
 .checkoutscreen-box-item {
   display: flex;
-  border: 1px solid #171717;
+  border: 1px solid #7eb686;
   padding: 1rem;
  
   align-items: center;
@@ -719,7 +726,7 @@ img {
 
 .checkoutscreen-box-item-price {
   font-size: 1.2rem;
-  color: #677D6A;
+  color: #7eb686;
 }
 
 .checkoutscreen-box-item-quantity {
@@ -754,13 +761,13 @@ img {
   padding: 0.75rem 1.5rem;
   border: none;
   color: #fff;
-  background: #677D6A;
+  background: #7eb686;
   cursor: pointer;
   font-size: 1rem;
 }
 
 .checkoutscreen-button:hover {
-  background: #677D6A;
+  background: #7eb686;
 }
 
 .product-image{

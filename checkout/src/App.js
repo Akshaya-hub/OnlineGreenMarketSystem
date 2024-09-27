@@ -14,7 +14,7 @@ import Navbar from './components/Navbar';
 import Backdrop from "./components/Backdrop";
 import SideDrawer from "./components/SideDrawer";
 import AdminPgae from "./Pages/AdminPgae";
-const role = 'admin';
+const role = 'user';
 function App() {
  const [sideToggle, setSideToggle] = useState(false);
  if(role === 'user'){

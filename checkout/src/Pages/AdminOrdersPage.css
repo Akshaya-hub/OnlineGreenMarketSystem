@@ -18,7 +18,7 @@
     padding: 10px;
     width: 300px;
     border-radius: 5px;
-    border: 1px solid #677D6A;
+    border: 1px solid #7eb686;
   }
   
   .orders-table {
@@ -36,7 +36,7 @@
   }
   
   thead th {
-    background-color: #677D6A;
+    background-color: #7eb686;
     color: white;
     padding: 10px;
     text-align: left;
@@ -44,7 +44,7 @@
   
   tbody td {
     padding: 10px;
-    border-bottom: 1px solid #677D6A;
+    border-bottom: 1px solid #7eb686;
   }
   
   .status-badge {
@@ -58,12 +58,12 @@
   }
   
   .status-confirmed {
-    background-color: #677D6A;
+    background-color: #7eb686;
     color: white;
   }
   
   .confirm-btn {
-    background-color: #677D6A;
+    background-color: #7eb686;
     color: white;
     border: none;
     padding: 5px 10px;
