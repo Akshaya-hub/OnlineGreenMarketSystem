@@ -517,7 +517,7 @@ img {
     .quantity-controls-button{
       
       border: 1px solid ;
-      width: 65px;
+      width: 75px;
       border-radius: 5px;
       justify-content: space-between;
       border-color: #7eb686;
@@ -764,6 +764,12 @@ img {
   background: #7eb686;
   cursor: pointer;
   font-size: 1rem;
+}
+.checkoutscreen-coupon{
+  display: flex;
+}
+.checkoutscreen-textbox{
+  width: 150px;
 }
 
 .checkoutscreen-button:hover {

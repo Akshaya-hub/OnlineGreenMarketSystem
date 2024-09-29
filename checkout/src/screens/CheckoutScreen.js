@@ -1,15 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { getCartItems, getCartTotal } from '../features/slice/cartSlice';
 
 
 const CheckoutScreen = () => {
+  const [couponCode, setCouponCode] = useState('');
+  const [discount,setDiscount] = useState('')
+  const applyCoupon =()=>{
+    if(couponCode === 'PR15' )
+    {
+      setDiscount(0.10)
+    }
+    else
+      return null;
+
+  }
+
+  
+  
   const cartItems = useSelector(getCartItems);
   const cartTotalAmount = useSelector(getCartTotal);
-  
-  // Dummy discount amount
-  const discountAmount = 10; // Replace with actual logic to get discount
-  const totalAmount = cartTotalAmount - discountAmount;
+  const totalAmount = cartTotalAmount - (cartTotalAmount*discount);
 
   return (
     <div className="checkoutscreen">
@@ -29,11 +40,23 @@ const CheckoutScreen = () => {
             </div>
           </div>
         ))}
-      </div>
-
       <div className="checkoutscreen-summary">
-        <p>Subtotal: <span>${cartTotalAmount.toFixed(2)}</span></p>
-        <p>Discount: <span>${discountAmount.toFixed(2)}</span></p>
+      <p>Subtotal: <span>${cartTotalAmount.toFixed(2)}</span></p>
+      </div>
+        { cartTotalAmount > 50000 && (
+
+        <div className='checkoutscreen-coupon'>
+          
+        <input
+          className='checkoutscreen-textbox'
+          type="text"
+          value={couponCode}
+          onChange={(e) => setCouponCode(e.target.value)}
+          placeholder="Enter coupon code"
+          />
+        <button onClick={applyCoupon} className='checkoutscreen-button'>Apply Coupon</button>
+        </div>
+        )}
         <p>Total: <span>${totalAmount.toFixed(2)}</span></p>
         <div className="checkoutscreen-buttons">
           <button className="checkoutscreen-button">Confirm Order</button>

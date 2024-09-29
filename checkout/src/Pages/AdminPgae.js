@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import './AdminOrdersPage.css'; // Import the CSS file for styling
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
+import './AdminOrdersPage.css';
 
 const AdminPage = () => {
   const [orders, setOrders] = useState([]);
@@ -13,6 +15,7 @@ const AdminPage = () => {
       try {
         const response = await fetch('http://localhost:8000/api/cartItems/cart');
         const data = await response.json();
+        console.log(data); // Debugging: check if products are properly fetched
         setOrders(data);
         setLoading(false);
       } catch (error) {
@@ -24,23 +27,44 @@ const AdminPage = () => {
     fetchOrders();
   }, []);
 
-  // Handle the confirm order action
-  const handleConfirmOrder = async (orderId) => {
-    try {
-      // API call to update order status
-      const response = await fetch(`http://localhost:8000/api/cartItems/confirm/${orderId}`, {
-        method: 'PUT', // Assuming you use PUT to update the order status
-      });
+  // Export individual order to PDF
+  const exportOrderToPDF = (order) => {
+    const doc = new jsPDF();
 
-      if (!response.ok) throw new Error('Order confirmation failed');
+    const tableColumn = ['Product Name', 'Quantity', 'Unit Price', 'Total'];
+    const tableRows = [];
 
-      const updatedOrders = orders.map(order =>
-        order._id === orderId ? { ...order, status: 'Confirmed' } : order
-      );
-      setOrders(updatedOrders);
-    } catch (error) {
-      setError('Failed to confirm the order');
-    }
+    (order.products || []).forEach(product => {
+      const productData = [
+        product.name,
+        product.quantity,
+        `$${product.price.toFixed(2)}`,
+        `$${(product.price * product.quantity).toFixed(2)}`,
+      ];
+      tableRows.push(productData);
+    });
+
+    // Add order details at the top
+    doc.setFontSize(12);
+    doc.text(`Total Amount: $${order.totalAmount.toFixed(2)}`, 14, 25);
+    doc.text(`Coupon Code: ${order.couponCode || 'N/A'}`, 14, 35);
+
+    // Add space before the table
+    doc.text(" ", 14, 45);
+
+    // Create the products table
+    doc.autoTable({
+      startY: 50, // Adjust the table starting position
+      head: [tableColumn],
+      body: tableRows,
+      margin: { top: 10 },
+      styles: { halign: 'center', valign: 'middle' }, // Align cells centrally
+      headStyles: { fillColor: [0, 102, 204] }, // Set header background color
+      theme: 'grid', // Apply grid theme for better visual structure
+    });
+
+    // Save the PDF
+    doc.save(`order_${order._id}.pdf`);
   };
 
   if (loading) return <div>Loading orders...</div>;
@@ -52,56 +76,66 @@ const AdminPage = () => {
         <h1>Admin - Orders Management</h1>
       </header>
 
-      <div className="search-bar">
-        <input
-          type="text"
-          placeholder="Search orders by name, ID, or status..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
+      <div className="controls">
+        <div className="search-bar">
+          <input
+            type="text"
+            placeholder="Search orders by ID or status..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        </div>
       </div>
 
       <div className="orders-table">
         <table>
           <thead>
             <tr>
-              <th>Order ID</th>
-              <th>Product Name</th>
-              <th>Quantity</th>
+              
               <th>Total Amount</th>
-              <th>Status</th>
+              <th>Coupon Code</th>
+              <th>Products</th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody>
             {orders
               .filter(order =>
-                order.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                order._id.includes(searchTerm) ||
-                order.status.toLowerCase().includes(searchTerm.toLowerCase())
+                order._id?.includes(searchTerm) ||
+                (order.status?.toLowerCase() || '').includes(searchTerm.toLowerCase())
               )
               .map(order => (
                 <tr key={order._id}>
-                  <td>{order._id}</td>
-                  <td>{order.name}</td>
-                  <td>{order.cartQuantity}</td>
                   <td>${order.totalAmount.toFixed(2)}</td>
+                  <td>{order.couponCode || 'N/A'}</td>
                   <td>
-                    <span
-                      className={`status-badge ${
-                        order.status === 'Confirmed' ? 'status-confirmed' : 'status-pending'
-                      }`}
-                    >
-                      {order.status}
-                    </span>
+                    <table className="nested-table">
+                      <thead>
+                        <tr>
+                          <th>Product Name</th>
+                          <th>Quantity</th>
+                          <th>Unit Price</th>
+                          <th>Total</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {(order.products || []).map((product, index) => (
+                          <tr key={index}>
+                            <td>{product.name}</td>
+                            <td>{product.quantity}</td>
+                            <td>${product.price.toFixed(2)}</td>
+                            <td>${(product.price * product.quantity).toFixed(2)}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
                   </td>
                   <td>
                     <button
-                      className="confirm-btn"
-                      onClick={() => handleConfirmOrder(order._id)}
-                      disabled={order.status === 'Confirmed'}
+                      className="export-btn"
+                      onClick={() => exportOrderToPDF(order)}
                     >
-                      {order.status === 'Confirmed' ? 'Confirmed' : 'Confirm'}
+                      Export to PDF
                     </button>
                   </td>
                 </tr>

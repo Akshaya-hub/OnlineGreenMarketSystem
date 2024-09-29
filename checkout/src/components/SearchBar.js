@@ -8,7 +8,7 @@ const SearchBar = () => {
   const [results, setResults] = useState([]);  // Store search results
   const [showResults, setShowResults] = useState(false);  // Control visibility of results
 
-  // Fetch product data on component mount
+ 
   useEffect(() => {
     const fetchItems = async () => {
       try {

@@ -12,10 +12,23 @@ const CartScreen = () => {
   
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);  
+  const [appliedCoupon, setAppliedCoupon] = useState('');
 
+  // useEffect to set coupon based on cartTotalAmount
   useEffect(() => {
-    
-  }, [cartItems, dispatch]);
+    if (cartTotalAmount > 50000) {
+      setAppliedCoupon('PR15');
+    }  else {
+      setAppliedCoupon('');
+    }
+  }, [cartTotalAmount]);
+
+  const coupon = () => {
+    if (appliedCoupon) {
+      return <p>Your redeem code is {appliedCoupon}</p>;
+    }
+    return null;
+  };
 
   const handleAddToCart = (item) => {
     if (item.cartQuantity < item.quantity) {
@@ -33,7 +46,8 @@ const CartScreen = () => {
   const decrementQuantity = (item) => {
     dispatch(decreaseCart(item));
   };
-
+  const discountRate = appliedCoupon === 'PR15' ? 0.15 : 0;
+  const discountAmount = cartTotalAmount - (cartTotalAmount*discountRate)
   const handleCheckout = async () => {
     setIsLoading(true);  
     try {
@@ -44,8 +58,9 @@ const CartScreen = () => {
         },
         body: JSON.stringify({
           cartItems, 
-          totalAmount: cartTotalAmount, 
+          totalAmount: discountAmount, 
           totalQuantity,
+          couponCode: appliedCoupon, // Post the applied coupon code
         }),
       });
   
@@ -62,7 +77,6 @@ const CartScreen = () => {
       setIsLoading(false); 
     }
   };
-  
 
   return (
     <div className='cartscreen'>
@@ -112,6 +126,7 @@ const CartScreen = () => {
       <div className="cartscreen-bottom">
         <div className="cartscreen-info">
           <p>Subtotal ({totalQuantity} items):</p>
+          {coupon()}  {/* Call the coupon function here */}
           <p>${cartTotalAmount.toFixed(2)}</p>
         </div>
         <div>
