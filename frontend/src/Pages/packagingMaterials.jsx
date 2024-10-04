@@ -1,43 +1,58 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import './package.css';
+import envelope from '../Components/assets/envelope.png'; // Replace with the actual image path
+import paperbag from '../Components/assets/paperbag.png'; // Replace with the actual image path
+import corrugatedBox from '../Components/assets/corrugatedBox.png';
+const packagingMaterials = () => {
+  const products = [
+    {
+      id: 1,
+      name: 'Manilla Pocket Gummed Envelope',
+      image: envelope,
+      measurements: '24.1 x 31.8 cm',
+      weightLimit: '500g',
+      description: 'The special GreenMart Envelope rate only applies up to this weight.'
+    },
+    {
+      id: 2,
+      name: 'Square bottom paper bag',
+      image: paperbag,
+      measurements: 'Small: 20cm x 10cm x 25cm\nMedium: 30cm x 15cm x 35cm\nLarge: 40cm x 20cm x 45cm',
+      weightLimit: '1kg',
+      description: ''
+    },
 
-const PackagingMaterials = () => {
-  const [materials, setMaterials] = useState([]);
-
-  // Fetch data from the API
-  const fetchMaterials = async () => {
-    try {
-      const response = await fetch('http://localhost:4000/api/packaging-materials');
-      const data = await response.json();
-      setMaterials(data); // Update the state with fetched materials
-    } catch (error) {
-      console.error("Error fetching packaging materials:", error);
-    }
-  };
-
-  // Fetch data on component mount
-  useEffect(() => {
-    fetchMaterials();
-  }, []);
+    {
+        id: 3,
+        name: 'Top Visible Corrugated Box',
+        image: corrugatedBox,
+        measurements: 'Small: 20cm x 10cm x 25cm\nMedium: 30cm x 15cm x 35cm\nLarge: 40cm x 20cm x 45cm',
+        weightLimit: '5kg',
+        description: 'Minimum weight charged: 1 kgs Auto size generation according to the product size and weight.'
+      },
+      {
+        id: 4,
+        name: 'Top Visible Corrugated Box',
+        image: corrugatedBox,
+        measurements: 'Small: 20cm x 10cm x 25cm\nMedium: 30cm x 15cm x 35cm\nLarge: 40cm x 20cm x 45cm',
+        weightLimit: '5kg',
+        description: 'Minimum weight charged: 1 kgs Auto size generation according to the product size and weight.'
+      }
+  ];
 
   return (
     <div className="packaging-cards">
-      {materials.length === 0 ? (
-        <p>Loading packaging materials...</p>  // Display while data is loading
-      ) : (
-        materials.map(material => (
-          <div key={material.id} className="card">
-            <img src={material.uploadImage} alt={material.name} className="material-image" />
-            <h3>{material.packagingMaterial}</h3>
-            <p><strong>Internal measurements:</strong> {material.internalMeasurement}</p>
-            <p><strong>Weight limit:</strong> {material.weightLimit}g</p>
-            {material.description && <p>{material.description}</p>}
-          </div>
-        ))
-      )}
+      {products.map(product => (
+        <div key={product.id} className="card">
+          <img src={product.image} alt={product.name} className="product-image" />
+          <h3>{product.name}</h3>
+          <p><strong>Internal measurements:</strong> {product.measurements}</p>
+          <p><strong>Weight limit:</strong> {product.weightLimit}</p>
+          {product.description && <p>{product.description}</p>}
+        </div>
+      ))}
     </div>
   );
 };
 
-export default PackagingMaterials;
-
+export default packagingMaterials;

@@ -1,42 +1,51 @@
-
 import './App.css';
 import Packaging from './Pages/packaging';
-import Navbar from './Components/Navbar/Navbar';
 import PackagingMaterials from './Pages/packagingMaterials';
-import {BrowserRouter,Routes,Route} from 'react-router-dom'; 
+import { BrowserRouter, Routes, Route } from 'react-router-dom'; 
 import Home from './Pages/Home';
-import AboutUs from './Pages/AboutUs';
-import './styles/style.css';
+import Signup from './Pages/Signup'; 
+import VerifyOTP from './Pages/VerifyOTP'; 
+import Login from './Pages/Login'; 
+import Profile from './Pages/Profile'; 
+import MainLayout from './MainLayout'; // Import the new layout
 
-import HomeScreen from './screens/HomeScreen';
-import ProductScreen from './screens/ProductScreen';
-import CartScreen from './screens/CartScreen';
-import DeliveryForm from './screens/DeliveryForm';
-import CheckoutScreen from './screens/CheckoutScreen';
+import AddProduct from './productManagment/AddProduct';
+import ViewProduct from './productManagment/ViewProduct';
+import AdminView from './productManagment/AdminView';
+import Dashboard from './productManagment/Dashboard';
+
+
+
 
 function App() {
   return (
     <div>
       <BrowserRouter>
-      <Navbar />
-      <Routes>
-        <Route path='/' element={<Home/>}/>
-        {/* <Route path='/products' element={<Packaging/>}/> */}
-        <Route path='/product/:id' element={<ProductScreen />} />
-        <Route path='/products' element={<HomeScreen/>}/>
-        <Route path='/aboutUs' element={<AboutUs/>}/>
-        <Route path='/service' element={<PackagingMaterials/>}/>
-        <Route path='/delivery' element={<DeliveryForm />} />
-        <Route path='/checkout' element={<CheckoutScreen />} />
-        <Route path='/package' element={<Packaging />} />
-      </Routes>
-      <Routes>
-      <Route path='/Cart' element={<CartScreen/>}/>
-      <Route path='/login' element={<loginSignUp/>}/>
-      </Routes>
-      
+        <Routes>
+          {/* Routes that include the Navbar */}
+          <Route element={<MainLayout />}>
+            <Route path='/' element={<Home />} />
+            <Route path='/products' element={<PackagingMaterials />} />
+            <Route path='/aboutUs' element={<PackagingMaterials />} />
+            <Route path='/service' element={<PackagingMaterials />} />
+            <Route path='/cart' element={<Packaging />} />
+            <Route path='/profile' element={<Profile />} />
+
+
+            <Route path='/product' element={<ViewProduct />} />
+            <Route path='/add-product' element={<AddProduct />} />
+            <Route path='/admin-product' element={<AdminView />} />
+            <Route path='/dashboard' element={<Dashboard />} />
+
+          </Route>
+
+          {/* Routes without the Navbar */}
+          <Route path='/signup' element={<Signup />} />
+          <Route path='/verifyotp' element={<VerifyOTP />} />
+          <Route path='/login' element={<Login />} />
+          
+        </Routes>
       </BrowserRouter>
-      
     </div>
   );
 }

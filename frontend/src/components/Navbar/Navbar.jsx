@@ -13,7 +13,7 @@ const Navbar = () => {
         <img src={logo} alt="" id="logo" />
         <ul className="navbar-menu">
             <li onClick={()=>{setMenu("home")}}><Link style={{textDecoration: 'none'}} to='/'>Home</Link>{menu === "home"?<hr/>:<></>}</li>
-            <li onClick={()=>{setMenu("products")}}><Link style={{textDecoration: 'none'}} to='/products'>products</Link>{menu === "products"?<hr/>:<></>}</li>
+            <li onClick={()=>{setMenu("products")}}><Link style={{textDecoration: 'none'}} to='/product'>products</Link>{menu === "products"?<hr/>:<></>}</li>
             <li onClick={()=>{setMenu("aboutUs")}}><Link style={{textDecoration: 'none'}} to='/aboutUs'>AboutUs</Link>{menu === "aboutUs"?<hr/>:<></>}</li>
             <li onClick={()=>{setMenu("service")}}><Link style={{textDecoration: 'none'}} to='/service'>Customer Service</Link>{menu === "service"?<hr/>:<></>}</li>
         </ul>
@@ -23,7 +23,7 @@ const Navbar = () => {
                 <Link to='/cart'> <img src={basket_icon} alt="" className="basket" /></Link>
                 <div className="nav-cart-count">0</div>
                 <div className="dot">
-                <Link to='/login'><button>Sign in</button></Link>
+                <Link to='/signup'><button>Sign in</button></Link>
                 </div>
             </div>
         </div>
